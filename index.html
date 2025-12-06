@@ -1,0 +1,562 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>I'm Sorry</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Cute fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #f6efe4;
+      --card-bg: #fdf8f5;
+      --text-main: #5a3a47;
+      --shadow-soft: 0 18px 40px rgba(0,0,0,0.15);
+      --radius-xl: 32px;
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+
+    body {
+      min-height: 100vh;
+      font-family: "Poppins", system-ui;
+      background: radial-gradient(circle at 10% 20%, #ffd6e5 0, transparent 50%),
+                  radial-gradient(circle at 90% 80%, #ffe8b8 0, transparent 55%),
+                  var(--bg);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+      color:var(--text-main);
+      overflow:hidden;
+    }
+
+    /* floating hearts */
+    .bg-heart{
+      position:fixed;
+      width:80px;
+      height:80px;
+      border-radius:60% 40% 60% 40%;
+      background:rgba(255,183,206,0.4);
+      filter:blur(4px);
+      opacity:0.7;
+      pointer-events:none;
+      animation:float 12s infinite alternate ease-in-out;
+      z-index:0;
+    }
+    .bg-heart:nth-child(1){top:18%; left:6%;}
+    .bg-heart:nth-child(2){top:55%; right:10%; width:60px; height:60px; animation-duration:9s;}
+    .bg-heart:nth-child(3){bottom:8%; left:20%; width:70px; height:70px; animation-duration:11s;}
+
+    @keyframes float{
+      from{transform:translateY(0) scale(1);}
+      to{transform:translateY(-18px) scale(1.03);}
+    }
+
+    .card-wrapper{position:relative; z-index:1;}
+
+    .card{
+      width:min(420px, 100vw - 40px);
+      background:var(--card-bg);
+      border-radius:var(--radius-xl);
+      box-shadow:var(--shadow-soft);
+      padding:26px 30px 30px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:18px;
+    }
+
+    .hidden{display:none;}
+
+    /* PAGE 1 – Hey Cutiepie */
+    .card-top{
+      width:100%;
+      background:linear-gradient(to bottom, #ffe7f0 0%, #ffd0e2 45%, #ffc0dc 100%);
+      border-radius:26px;
+      padding:26px 26px 18px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      position:relative;
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,0.6);
+    }
+    .card-top::before,
+    .card-top::after{
+      content:"♥";
+      position:absolute;
+      top:14px;
+      font-size:20px;
+      color:#f48aad;
+    }
+    .card-top::before{ left:22px; }
+    .card-top::after{ right:22px; }
+
+    .bunny{
+      width:140px;
+      height:140px;
+      border-radius:50%;
+      background:#fff7fb;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow:
+        0 10px 22px rgba(208,126,158,0.35),
+        0 0 0 6px rgba(255,255,255,0.8);
+      margin-bottom:10px;
+      overflow:hidden;
+    }
+    .bunny img{max-width:80%; height:auto;}
+
+    .petal{ position:absolute; bottom:12px; font-size:18px; color:#f48aad; }
+    .petal.left{ left:36px; }
+    .petal.right{ right:36px; }
+
+    .headline{
+      font-family:"Playfair Display";
+      font-size:32px;
+      font-weight:600;
+      text-align:center;
+    }
+
+    .subtext{
+      text-align:center;
+      font-size:14px;
+      opacity:0.7;
+    }
+
+    .btn-main{
+      border:none;
+      padding:12px 38px;
+      border-radius:999px;
+      background:linear-gradient(135deg,#f3a9c3,#e479a4);
+      color:white;
+      font-size:15px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      cursor:pointer;
+      box-shadow:0 10px 18px rgba(215,120,156,0.45),
+                 inset 0 0 0 1px rgba(255,255,255,0.65);
+      transition:0.2s ease;
+    }
+    .btn-main:hover{ transform:translateY(-2px); }
+    .tiny-tag{text-align:center; opacity:0.5; font-size:11px;}
+
+    /* PAGE 2 – Little things */
+    .header-small{
+      font-family:"Playfair Display";
+      font-size:26px;
+      text-align:center;
+    }
+    .helper-text{
+      font-size:13px;
+      opacity:0.7;
+      text-align:center;
+    }
+
+    .pill-list{
+      width:100%;
+      display:flex;
+      flex-direction:column;
+      gap:16px;
+    }
+
+    .pill{
+      position:relative;
+      width:100%;
+      padding:18px 24px;
+      border-radius:999px;
+      background:linear-gradient(135deg,#ffe0d6,#ffcabd);
+      box-shadow:0 10px 20px rgba(0,0,0,0.18),
+                 inset 0 0 0 1px rgba(255,255,255,0.7);
+      overflow:hidden;
+    }
+    .pill:nth-child(2){
+      background:linear-gradient(135deg,#ffd9ec,#ffbde1);
+    }
+    .pill:nth-child(3){
+      background:linear-gradient(135deg,#e6ddff,#f1cdff);
+    }
+
+    .pill-text{
+      position:relative;
+      z-index:1;
+      font-size:14px;
+      text-align:center;
+    }
+
+    /* sliding overlay hearts */
+    .pill-overlay{
+      position:absolute;
+      inset:0;
+      border:none;
+      border-radius:inherit;
+      background:linear-gradient(135deg,#ffd0c0,#ffb0b8);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+      z-index:2;
+      box-shadow:
+        0 10px 20px rgba(0,0,0,0.18),
+        inset 0 0 0 1px rgba(255,255,255,0.8);
+      transition:
+        transform 0.85s cubic-bezier(0.25, 1, 0.35, 1),
+        opacity 0.55s ease;
+    }
+
+    .pill-overlay span{
+      font-size:26px;
+    }
+
+    .slide-pill.revealed .pill-overlay{
+      transform:translateX(-110%);
+    }
+
+    .btn-secondary{
+      padding:12px 34px;
+      border:none;
+      border-radius:999px;
+      background:linear-gradient(135deg,#f2a5c1,#e474a1);
+      color:white;
+      cursor:pointer;
+      box-shadow:0 10px 18px rgba(215,120,156,0.45);
+      font-size:15px;
+      transition:0.2s ease;
+    }
+    .btn-secondary:hover{ transform:translateY(-2px); }
+
+    /* PAGE 3 – From my heart */
+    .title-script{
+      font-family:"Playfair Display","Times New Roman",serif;
+      font-size:28px;
+      margin-bottom:18px;
+      text-align:center;
+    }
+
+    .cats-row{
+      width:100%;
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:14px;
+      margin-bottom:20px;
+    }
+
+    .cat-tile{
+      border-radius:24px;
+      padding:10px;
+      background:linear-gradient(145deg,#efe6ff,#fcecff);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow:
+        0 10px 20px rgba(0,0,0,0.15),
+        inset 0 0 0 1px rgba(255,255,255,0.75);
+    }
+    .cat-tile:nth-child(2){
+      background:linear-gradient(145deg,#ffe3ed,#ffe9dd);
+    }
+
+    .cat-tile img{
+      max-width:80%;
+      height:auto;
+      display:block;
+    }
+
+    /* wrapper + big "I'm Sorry" card like reference */
+    .tap-wrapper{
+      margin-top:4px;
+      border-radius:26px;
+      padding:18px 18px 22px;
+      background:linear-gradient(180deg,#ffe6ea,#ffd8e1);
+      box-shadow:
+        0 16px 32px rgba(0,0,0,0.18),
+        inset 0 0 0 1px rgba(255,255,255,0.9);
+      width:100%;
+      text-align:center;
+    }
+
+    .tap-label{
+      font-size:12px;
+      opacity:.65;
+      margin-bottom:8px;
+    }
+
+    .sorry-card{
+      width:100%;
+      border:none;
+      border-radius:26px;
+      padding:22px 26px 26px;
+      background:
+        radial-gradient(circle at 0 100%, rgba(255,192,203,0.55) 0, transparent 60%),
+        radial-gradient(circle at 100% 0, rgba(255,230,217,0.45) 0, transparent 55%),
+        linear-gradient(180deg,#ffffff,#ffeef4);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+      position:relative;
+      overflow:hidden;
+      box-shadow:
+        0 18px 34px rgba(0,0,0,0.2),
+        inset 0 0 0 1px rgba(255,255,255,0.98);
+      transition:
+        transform .18s ease-out,
+        box-shadow .18s ease-out,
+        filter .18s ease-out;
+    }
+
+    .sorry-card span{
+      position:relative;
+      font-family:"Playfair Display","Times New Roman",serif;
+      font-size:34px;
+      letter-spacing:0.03em;
+      color:#5b3546;
+      text-shadow:0 2px 6px rgba(0,0,0,0.12);
+    }
+
+    .sorry-card:hover{
+      transform:translateY(-3px);
+      filter:brightness(1.03);
+      box-shadow:
+        0 22px 40px rgba(0,0,0,0.24),
+        inset 0 0 0 1px rgba(255,255,255,1);
+    }
+
+    .sorry-card:active{
+      transform:translateY(1px) scale(0.99);
+      box-shadow:
+        0 10px 20px rgba(0,0,0,0.22),
+        inset 0 0 0 1px rgba(255,255,255,0.95);
+    }
+
+    /* Letter overlay */
+    #letter-overlay{
+      position:fixed;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:rgba(0,0,0,0.08);
+      backdrop-filter:blur(2px);
+      opacity:0;
+      pointer-events:none;
+      transition:
+        opacity .45s ease-out,
+        filter .45s ease-out;
+      z-index:5;
+    }
+    #letter-overlay.active{
+      opacity:1;
+      pointer-events:auto;
+    }
+
+    .letter-card{
+      width:min(420px, 100vw - 40px);
+      background:var(--card-bg);
+      border-radius:var(--radius-xl);
+      box-shadow:var(--shadow-soft);
+      padding:26px 26px 24px;
+      transform:scale(.92) translateY(10px);
+      filter:blur(4px);
+      transition:
+        transform .45s cubic-bezier(.22,1,.32,1),
+        filter .45s ease-out;
+    }
+    #letter-overlay.active .letter-card{
+      transform:scale(1) translateY(0);
+      filter:blur(0);
+    }
+
+    .letter-inner{
+      border-radius:26px;
+      padding:26px 26px 24px;
+      background: linear-gradient(180deg,#fff7fb,#ffe9f0);
+      box-shadow:
+        0 12px 26px rgba(0,0,0,0.15),
+        inset 0 0 0 1px rgba(255,255,255,0.95);
+      text-align:center;
+    }
+
+    .letter-title{
+      font-family:"Playfair Display","Times New Roman",serif;
+      font-size:30px;
+      margin-bottom:14px;
+    }
+
+    .letter-body{
+      font-size:13.5px;
+      line-height:1.7;
+      max-width:260px;
+      margin:0 auto;
+    }
+
+    .letter-close{
+      margin-top:18px;
+      font-size:12px;
+      opacity:.7;
+    }
+
+    @media(max-width:480px){
+      .card{padding:22px 20px 24px;}
+      .headline{font-size:26px;}
+      .header-small{font-size:23px;}
+      .title-script{font-size:24px;}
+      .sorry-card span{font-size:28px;}
+      .letter-title{font-size:26px;}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- background hearts -->
+  <div class="bg-heart"></div>
+  <div class="bg-heart"></div>
+  <div class="bg-heart"></div>
+
+  <div class="card-wrapper">
+
+    <!-- PAGE 1 -->
+    <div class="card" id="card-intro">
+      <div class="card-top">
+        <div class="bunny">
+          <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExY2l6aWtpYjA2MnV6NXk2MWtwMXJzZHFqajA1NzU1MmwyeWdhMjh4byZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Lv2VhwHrt6ljhvZ6LF/giphy.gif" alt="Cute Love">
+        </div>
+        <div class="petal left">✿</div>
+        <div class="petal right">✿</div>
+      </div>
+
+      <h1 class="headline">Hey Cutiepie</h1>
+
+      <p class="subtext">
+        Can we talk for a moment? There's<br>something important I want to tell you.
+      </p>
+
+      <button class="btn-main" id="continue-btn">Continue ♥</button>
+      <p class="tiny-tag">@s3ntinel__</p>
+    </div>
+
+    <!-- PAGE 2 -->
+    <div class="card hidden" id="card-list">
+      <h2 class="header-small">Little things I want to<br>tell you...</h2>
+      <p class="helper-text">Tap each one</p>
+
+      <div class="pill-list">
+
+        <div class="pill slide-pill">
+          <p class="pill-text">I messed up… and I’m really sorry for that.</p>
+          <button class="pill-overlay"><span>🤍</span></button>
+        </div>
+
+        <div class="pill slide-pill">
+          <p class="pill-text">I promise I’ll be better for you.</p>
+          <button class="pill-overlay"><span>🤍</span></button>
+        </div>
+
+        <div class="pill slide-pill">
+          <p class="pill-text">Please forgive me… You mean so much to me.</p>
+          <button class="pill-overlay"><span>🤍</span></button>
+        </div>
+
+      </div>
+
+      <button class="btn-secondary" id="to-heart-page">My message →</button>
+    </div>
+
+    <!-- PAGE 3 – From my heart -->
+    <div class="card hidden" id="card-heart">
+      <h1 class="title-script">From my heart...</h1>
+
+      <div class="cats-row">
+        <div class="cat-tile">
+          <img src="data:image/jpeg;base64,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" alt="Cute cat with heart">
+        </div>
+        <div class="cat-tile">
+          <img src="data:image/jpeg;base64,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" alt="Cute cat with heart">
+        </div>
+      </div>
+
+      <div class="tap-wrapper">
+        <p class="tap-label">↓ Tap to see message ↓</p>
+        <button class="sorry-card" id="sorryTrigger" type="button">
+          <span>I'm Sorry</span>
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FINAL LETTER OVERLAY -->
+  <div id="letter-overlay">
+    <div class="letter-card">
+      <div class="letter-inner">
+        <h2 class="letter-title">I'm Sorry</h2>
+        <p class="letter-body">
+          For hurting you and making you feel upset, I’m truly sorry.
+          I never wanted to be the reason behind your tears or your silence.
+          You matter to me more than I always manage to show, and it breaks
+          my heart knowing that I let you down. I promise to listen more,
+          care better, and grow for you every single day. Thank you for
+          being patient with me — I don’t ever want to lose you. ♡
+        </p>
+        <p class="letter-close">Tap outside or press ESC to close.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Page elements
+    const introCard   = document.getElementById("card-intro");
+    const listCard    = document.getElementById("card-list");
+    const heartCard   = document.getElementById("card-heart");
+
+    // Buttons
+    const continueBtn = document.getElementById("continue-btn");
+    const toHeartPage = document.getElementById("to-heart-page");
+
+    // 1 -> 2
+    continueBtn.addEventListener("click", () => {
+      introCard.classList.add("hidden");
+      listCard.classList.remove("hidden");
+    });
+
+    // 2 -> 3
+    toHeartPage.addEventListener("click", () => {
+      listCard.classList.add("hidden");
+      heartCard.classList.remove("hidden");
+    });
+
+    // Sliding hearts on page 2
+    document.querySelectorAll(".slide-pill").forEach(pill=>{
+      pill.querySelector(".pill-overlay").addEventListener("click", ()=>{
+        pill.classList.toggle("revealed");
+      });
+    });
+
+    // Letter overlay
+    const letterOverlay = document.getElementById("letter-overlay");
+    const sorryTrigger  = document.getElementById("sorryTrigger");
+
+    sorryTrigger.addEventListener("click", () => {
+      letterOverlay.classList.add("active");
+    });
+
+    // close on click outside card
+    letterOverlay.addEventListener("click", (e) => {
+      if (e.target === letterOverlay) {
+        letterOverlay.classList.remove("active");
+      }
+    });
+
+    // close on ESC
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        letterOverlay.classList.remove("active");
+      }
+    });
+  </script>
+</body>
+</html>
